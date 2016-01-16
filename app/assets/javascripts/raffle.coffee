@@ -12,6 +12,8 @@ app.config ($httpProvider) ->
   $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = authToken
 
 # refactor resource
+# because rails with automatically minified the javascript when we move the app into production,
+# we need to move our function into array and specify dependency as string in the array
 app.factory "Entry", ["$resource", ($resource) ->
   $resource("/entries/:id", {id: "@id"}, {update: {method: "PUT"}})
 ]
