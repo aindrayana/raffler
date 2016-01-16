@@ -9,6 +9,8 @@ angular.module('Raffler', []).controller "RaffleCtrl", ($scope) ->
     {name: "Larry"}
     {name: "Curly"}
     {name: "Moe"}
+    {name: "Lisa"}
+    {name: "Mary"}
   ]
 
   # addEntry function triggered when form is submited
@@ -22,6 +24,6 @@ angular.module('Raffler', []).controller "RaffleCtrl", ($scope) ->
     angular.forEach $scope.entries, (entry) ->
       pool.push(entry) if !entry.winner
     if pool.length > 0
-      entry = $scope.entries[Math.floor(Math.random()*$scope.entries.length)]
+      entry = pool[Math.floor(Math.random()*pool.length)]
       entry.winner = true
       $scope.lastWinner = entry
