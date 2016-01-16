@@ -18,8 +18,10 @@ angular.module('Raffler', []).controller "RaffleCtrl", ($scope) ->
 
   # drawWinner function, select random entry and mark it as a winner
   $scope.drawWinner = ->
-    entry = $scope.entries[Math.floor(Math.random()*$scope.entries.length)]
-    entry.winner = true
-    $scope.lastWinner = entry
-
-# add drawWinner, select random entry and mark it as a winner
+    pool = []
+    angular.forEach $scope.entries, (entry) ->
+      pool.push(entry) if !entry.winner
+    if pool.length > 0
+      entry = $scope.entries[Math.floor(Math.random()*$scope.entries.length)]
+      entry.winner = true
+      $scope.lastWinner = entry
