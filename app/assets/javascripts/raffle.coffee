@@ -1,17 +1,18 @@
 
 # angular.module('Raffler' -> ng-app="Raffler"
 # controller "RaffleCtrl" -> ng-controller="RaffleCtrl"
+# angular.module('Raffler', []).controller "RaffleCtrl", ($scope) ->
 
-# Raffler = angular.module('Raffler', [])
-# Raffler.controller "RaffleCtrl", ($scope) ->
-angular.module('Raffler', []).controller "RaffleCtrl", ($scope) ->
-  $scope.entries = [
-    {name: "Larry"}
-    {name: "Curly"}
-    {name: "Moe"}
-    {name: "Lisa"}
-    {name: "Mary"}
-  ]
+# ngResource define resource as dependency of module Raffler
+app = angular.module("Raffler", ["ngResource"])
+
+# we then pass the resource as an argument into the RaffleCtrl controller
+app.controller "RaffleCtrl", ($scope, $resource) ->
+  # define $resource function that we call to communicate with json api and store it as Entry variable
+  # $resource first argument specify the url to the api, the second specify the default parameter
+  # third argument define additional action, we define update action and set method to PUT
+  Entry = $resource("/entries/:id", {id: "@id"}, {update: {method: "PUT"}})
+  $scope.entries = Entry.query()
 
   # addEntry function triggered when form is submited
   $scope.addEntry = ->

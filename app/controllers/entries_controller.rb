@@ -1,23 +1,32 @@
 class EntriesController < ApplicationController
+
   respond_to :json
 
   def index
-    respond_with Entry.all
-  end
+      render :json => Entry.all
+    end
 
-  def show
-    respond_with Entry.find(params[:id])
-  end
+    def show
+      respond_with Entry.find(params[:id])
+    end
 
-  def create
-    respond_with Entry.find(params[:entry])
-  end
+    def create
+      render :json => Entry.create(name:params[:name])
+    end
 
-  def update
-    respond_with Entry.find(params[:id], params[:entry])
-  end
+    def update
+      render :json =>  Entry.update(safe_params[:id], safe_params)
+    end
 
-  def destroy
-    respond_with Entry.find(params[:id])
-  end
+    def destroy
+      render :json =>  Entry.destroy(params[:id])
+    end
+
+    
+    private
+
+    def safe_params
+      params.permit(:name, :winner, :id, :entry)
+    end
+
 end
