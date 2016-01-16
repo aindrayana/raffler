@@ -6,6 +6,10 @@
 # ngResource define resource as dependency of module Raffler
 app = angular.module("Raffler", ["ngResource"])
 
+app.config ($httpProvider) ->
+  authToken = $("meta[name=\"csrf-token\"]").attr("content")
+  $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = authToken
+
 # we then pass the resource as an argument into the RaffleCtrl controller
 app.controller "RaffleCtrl", ($scope, $resource) ->
   # define $resource function that we call to communicate with json api and store it as Entry variable
