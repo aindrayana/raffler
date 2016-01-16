@@ -20,6 +20,7 @@ angular.module('Raffler', []).controller "RaffleCtrl", ($scope) ->
 
   # drawWinner function, select random entry and mark it as a winner
   $scope.drawWinner = ->
+    # create pool array that will store previous winning entry
     pool = []
     angular.forEach $scope.entries, (entry) ->
       pool.push(entry) if !entry.winner
