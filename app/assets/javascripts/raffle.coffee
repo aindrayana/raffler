@@ -6,18 +6,26 @@
 # ngResource define resource as dependency of module Raffler
 app = angular.module("Raffler", ["ngResource"])
 
+# Found this on the internet and this csrf authentication is required, otherwise data will not be persisted
 app.config ($httpProvider) ->
   authToken = $("meta[name=\"csrf-token\"]").attr("content")
   $httpProvider.defaults.headers.common["X-CSRF-TOKEN"] = authToken
 
-# we then pass the resource as an argument into the RaffleCtrl controller
-app.controller "RaffleCtrl", ($scope, $resource) ->
-  # define $resource function that we call to communicate with json api and store it as Entry variable
-  # $resource first argument specify the url to the api, the second specify the default parameter
-  # third argument define additional action, we define update action and set method to PUT
-  Entry = $resource("/entries/:id", {id: "@id"}, {update: {method: "PUT"}})
-  $scope.entries = Entry.query()
+# refactor resource
+app.factory "Entry", ["$resource", ($resource) ->
+  $resource("/entries/:id", {id: "@id"}, {update: {method: "PUT"}})
+]
 
+# # we then pass the resource as an argument into the RaffleCtrl controller
+# app.controller "RaffleCtrl", ($scope, $resource) ->
+#   # define $resource function that we call to communicate with json api and store it as Entry variable
+#   # $resource first argument specify the url to the api, the second specify the default parameter
+#   # third argument define additional action, we define update action and set method to PUT
+#   Entry = $resource("/entries/:id", {id: "@id"}, {update: {method: "PUT"}})
+#   $scope.entries = Entry.query()
+
+app.controller "RaffleCtrl", ["$scope", "Entry", ($scope, Entry) ->
+  $scope.entries = Entry.query()
   # addEntry function triggered when form is submited
   $scope.addEntry = ->
     # save new entry with Entry.save function
@@ -37,3 +45,4 @@ app.controller "RaffleCtrl", ($scope, $resource) ->
       # when we mark entry as a winner we can update it by calling resource object $update()
       entry.$update()
       $scope.lastWinner = entry
+]
