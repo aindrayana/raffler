@@ -1,3 +1,58 @@
-// Place all the styles related to the raffle controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  background-color: #4b729e;
+  margin:20px;
+  padding:0;
+  font-family: "Arial";
+  font-size: 20px;
+}
+
+#container {
+  padding: 30px;
+  background-color: #fff;
+  margin: auto;
+  width: 60%;
+  border: 1px solid #000;
+}
+
+h1 {
+  font-size: 46px;
+  font-family: "Arial Black";
+  font-weight: bolder;
+  text-align: center;
+  margin: 0 0 25px;
+  padding:0;
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+  border-top: solid 1px #ccc;
+}
+
+li {
+  border-bottom: solid 1px #ccc;
+  padding: 10px 10px;
+  font-size: 16px;
+  position: relative;
+  .winner {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #999;
+    &.highlight {
+      color: #dd0000;
+      font-weight: bold;
+    }
+  }
+}
+
+.addBtn {
+  padding-left: 0;
+}
