@@ -14,6 +14,13 @@
   <ul>
     <li ng-repeat="entry in entries">
       {{entry.name}}
+      <span ng-show="entry.winner" ng-class="{highlight: entry == lastWinner}" class="winner">WINNER</span>
+      <%# display entry as a winner when draw button is click.
+          ng-show="entry.winner" -> so that only winner entry that shown
+          ng-class="{highlight: -> add highlight class only if entry is the last winner
+      %>
     </li>
   </ul>
+
+  <button ng-click="drawWinner()" class="drawbtn btn btn-primary">Draw Winner</button>
 </div>
