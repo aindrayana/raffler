@@ -16,7 +16,9 @@ app.controller "RaffleCtrl", ($scope, $resource) ->
 
   # addEntry function triggered when form is submited
   $scope.addEntry = ->
-    $scope.entries.push($scope.newEntry)
+    # save new entry with Entry.save function
+    entry = Entry.save($scope.newEntry)
+    $scope.entries.push(entry)
     $scope.newEntry = {}
 
   # drawWinner function, select random entry and mark it as a winner
@@ -28,4 +30,6 @@ app.controller "RaffleCtrl", ($scope, $resource) ->
     if pool.length > 0
       entry = pool[Math.floor(Math.random()*pool.length)]
       entry.winner = true
+      # when we mark entry as a winner we can update it by calling resource object $update()
+      entry.$update()
       $scope.lastWinner = entry
